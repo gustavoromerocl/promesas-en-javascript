@@ -73,9 +73,12 @@ function getRepos(repos_url){
   return GET(repos_url);
 }
 
-getUserInfo("codigofacilito").then(response => {
-  let responseJSON = JSON.parse(response);
-  console.log(responseJSON.repos_url);
+//Promesas anidadas
 
-  getRepos(responseJSON.repos_url).then(repos => console.log(repos));
+let getUserPromise = getUserInfo("codigofacilito");
+
+let getReposPromise = getUserInfo("codigofacilito").then( response => {
+  return getRepos(JSON.parse(response).repos_url);
 }).catch(console.log);
+
+getReposPromise.then(console.log).catch(console.log);
