@@ -75,10 +75,26 @@ function getRepos(repos_url){
 
 //Promesas anidadas
 
-let getUserPromise = getUserInfo("codigofacilito");
 
-let getReposPromise = getUserInfo("codigofacilito").then( response => {
-  return getRepos(JSON.parse(response).repos_url);
-}).catch(console.log);
 
-getReposPromise.then(console.log).catch(console.log);
+//getReposPromise.then(console.log).catch(console.log);
+
+function getGitHubUserInfo(){
+  let getUserPromise = getUserInfo("codigofacilito");
+
+  let getReposPromise = getUserInfo("codigofacilito").then( response => {
+    return getRepos(JSON.parse(response).repos_url);
+  });
+
+  return Promise.all([getUserPromise,getReposPromise]);
+}
+
+
+getGitHubUserInfo().then(([userInfo, reposInfo]) => {
+    console.log("Info del usuario: ");
+    console.log(userInfo);
+    console.log("Info de los repos: ");
+    console.log(reposInfo);
+  })
+  .catch(err => console.log(err));
+
