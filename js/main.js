@@ -12,6 +12,7 @@ console.log(message);
 //CREAR MI PRIMERA PROMESA
 
 //executor: function que recibe la promesa
+/*
 let promise = new Promise(function(resolve, reject){
   setTimeout(function(){
     if(confirm("¿Esta promesa se cumplió?"))
@@ -30,3 +31,13 @@ promise.then(function(resultado){
   console.log("Algo salió mal");
   console.log(error);
 })
+*/
+//OTRAS FORMAS DE CREAR PROMESAS
+
+function dummy(){
+  if(Math.floor(Date.now()/1000) % 2 == 0)
+    return Promise.resolve("hola mundo");
+  return Promise.reject("Error");
+}
+
+dummy().then(console.log).catch(console.log);
